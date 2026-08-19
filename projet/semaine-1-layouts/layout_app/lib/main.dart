@@ -118,7 +118,11 @@ class Homepage extends StatelessWidget{
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  customCard(iamgeLink: 'images/twins.jpg', title: 'Twins', description: 'Les Burgeur jumeaux qui font la paire', context: context)
+                  burgerCard(name: 'Twins', url: 'twins', description: 'Le burgeur des jumeaux qui font la paire...'),
+                  burgerCard(name: 'Big Queen', url: 'big-queen', description: 'Pour celles qui portent la couronne a la maison'),
+                  burgerCard(name: 'Egg Bacon', url: 'egg-bacon-burger', description: 'le berger de leve tot'),
+                  burgerCard(name: 'Prince', url: 'prince', description: 'Le preferer des futurs roi'),
+                  burgerCard(name: 'Cheese', url: 'cheese', description: 'Le classique pour les fans de fromage')
                 ],
               ),
             )
@@ -128,29 +132,72 @@ class Homepage extends StatelessWidget{
     );
   }
 
-  Card customCard({required String iamgeLink, required String title, required String description, required BuildContext context}){
-    return Card(
-      child: SizedBox(
-        width: 200,
-        height: 200,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Expanded(
-              child: ClipRRect(
-                child: Image.asset(
-                  iamgeLink,
-                  fit: BoxFit.cover
-                )
-              )
+  Container burgerCard({required String name, required String url, required String description}){
+    double size = 240;
+
+    TextStyle descriptionStyle = const TextStyle(    // cette variable de type TextStyle nous permet d'ajouter du style a notre description
+      fontStyle: FontStyle.italic,
+      color: Colors.grey
+    );
+    return Container(
+      margin: const  EdgeInsets.all(12),
+      clipBehavior: Clip.antiAlias,
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25),
+        color: Colors.pinkAccent.withAlpha(50)
+      ),
+      child: Column(
+        children: [
+          Image.asset(
+            'images/$url.jpg',
+            height: size*0.7,
+            width: size,
+            fit: BoxFit.cover,
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            name,
+            style: TextStyle(
+              
             ),
-            Center(child: Text(title)),
-            Center(child: Text(description))
-          ],
-        ),
+          ),
+          Text(
+            description,
+            style: descriptionStyle,
+            textAlign: TextAlign.center,
+          )
+        ],
       ),
     );
   }
+
+  // Card customCard({required String iamgeLink, required String title, required String description, required BuildContext context}){
+  //   return Card(
+  //     child: SizedBox(
+  //       width: 200,
+  //       height: 200,
+  //       child: Column(
+  //         mainAxisSize: MainAxisSize.min,
+  //         children: [
+  //           Expanded(
+  //             child: ClipRRect(
+  //               child: Image.asset(
+  //                 iamgeLink,
+  //                 fit: BoxFit.cover
+  //               )
+  //             )
+  //           ),
+  //           Center(child: Text(title)),
+  //           Center(child: Text(description))
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 }
 
 
