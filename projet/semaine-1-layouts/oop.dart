@@ -130,8 +130,4 @@ abstract class FormeGeometrique{
   }
 }
 
-class Circle extends FormeGeometrique{
-  Circle(super.name, super.longeur);
 
-  
-}
