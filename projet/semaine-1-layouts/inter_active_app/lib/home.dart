@@ -64,7 +64,25 @@ class _HomePageState extends State<Homepage>{
                   Text('Changer le titre')
                 ],
               ),
-            )
+            ),
+            FilledButton(
+              onPressed: (){}, 
+              child: const Text('Filled')),
+            OutlinedButton(
+              onPressed: (){},
+              style: OutlinedButton.styleFrom(
+                side: BorderSide(
+                  width: 1.5,
+                  color: Colors.redAccent,
+                  style: BorderStyle.solid
+                )
+              ),
+             child: Text('un outline')
+            ),
+            IconButton(
+              onPressed: (){}, 
+              icon: Icon(Icons.add)
+            ),
           ],
         ),
       )
