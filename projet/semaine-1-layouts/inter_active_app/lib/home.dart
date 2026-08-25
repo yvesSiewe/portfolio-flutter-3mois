@@ -1,91 +1,154 @@
+
+
 import 'package:flutter/material.dart';
 
-class Homepage extends StatefulWidget{
-  
-  const Homepage({super.key,});
-  
+class HomePage extends StatefulWidget{
+  const HomePage({super.key});
+
   @override
-  State<Homepage> createState() {
+  State<StatefulWidget> createState() {
     // TODO: implement createState
-    return _HomePageState();
+    return _HomePage();
   }
 }
 
-class _HomePageState extends State<Homepage>{
+class _HomePage extends State<HomePage>{
 
-  Color _backgroundColor = Colors.white;
-
-  final List<String> _titles = [
-    'Apprendre les interactifs',
-    'I love Flutter',
-    'East Sleep Code Repeat'
-  ];
-
-  int _titleIndex = 0;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     
     return Scaffold(
-      appBar: AppBar(
-        title: Text(_titles[_titleIndex]),
-        centerTitle: true,
-        backgroundColor: _backgroundColor,
-      ),
-   
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextButton(
-              onPressed: (){
-                setState((){
-                  _backgroundColor = (_backgroundColor == Colors.white) ? Colors.black : Colors.white;
-                });
-              }, 
-              
-              child: const Text('Cliquer Moi')
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height*0.45,
+              child: SizedBox(
+                child: Container(
+                  padding: EdgeInsets.all(30),
+                  decoration: BoxDecoration(
+                    
+                    gradient: LinearGradient(
+                      colors: [const Color.fromARGB(129, 244, 67, 54), const Color.fromARGB(255, 194, 75, 75)],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight
+                    ),
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(50),
+                      bottomRight: Radius.circular(50),
+                    ) 
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children:  [
+                      RichText(
+                        text: TextSpan(
+                          text: 'Welcome on',
+                          style: TextStyle(
+                            fontSize: 28
+                          ),
+                          children: const [
+                            TextSpan(
+                              text: '\n Food Delishous',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w900,
+                                fontStyle: FontStyle.italic
+                              )
+                            )
+                          ]
+                        )
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
+            Padding(
+              padding: EdgeInsetsGeometry.all(30),
+              child:  Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Sign In',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold
+                      ),
+                    ),
+                    const SizedBox(height: 20,),
+                    TextFormField(
+            
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.person),
+                        hintText: 'UserName',
+                        border: OutlineInputBorder()
+                      ),
+                    ),
+                    const SizedBox(height: 20,),
+                    TextFormField(
+                      validator: (value){
+                        if(value == null || value.isEmpty){
 
-            ElevatedButton(
-              onPressed: (){
-                setState(() {
-                  _titleIndex = (_titleIndex + 1)%_titles.length;
-                });
-              }, 
-              style: ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll<Color>(Colors.lightGreenAccent),
-                textStyle: WidgetStatePropertyAll<TextStyle>(TextStyle(fontSize: 20, color: Colors.white))
+                        }
+                      },
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.email),
+                        hintText: 'userEmail',
+                        focusColor: Colors.green,
+                        border: OutlineInputBorder()
+                      ),
+                    ),
+                    const SizedBox(height: 20,),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: 50,
+                      child: ElevatedButton(
+                        onPressed: (){}, 
+                        style: ElevatedButton.styleFrom(
+                          elevation: 0,
+                          backgroundColor: Colors.redAccent
+                          
+                        ),
+                        child: Text(
+                          'Send',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18
+                          ),
+                        ),
+                      )
+                    ),
+                    const SizedBox(height: 20,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children:  [
+                        Text("Don't you have an account ?"),
+                        TextButton(onPressed: (){}, 
+                        child: const Text(
+                          'Sign Up',
+                          style: TextStyle(
+                            color: Colors.red
+                          ),
+                        ),
+
+                      )
+                      ],
+                    )
+                  ],
+                ),
               ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: const [
-                  Icon(Icons.edit),
-                  Text('Changer le titre')
-                ],
-              ),
-            ),
-            FilledButton(
-              onPressed: (){}, 
-              child: const Text('Filled')),
-            OutlinedButton(
-              onPressed: (){},
-              style: OutlinedButton.styleFrom(
-                side: BorderSide(
-                  width: 1.5,
-                  color: Colors.redAccent,
-                  style: BorderStyle.solid
-                )
-              ),
-             child: Text('un outline')
-            ),
-            IconButton(
-              onPressed: (){}, 
-              icon: Icon(Icons.add)
-            ),
+            )
           ],
         ),
-      )
+      ),
     );
   }
 }
