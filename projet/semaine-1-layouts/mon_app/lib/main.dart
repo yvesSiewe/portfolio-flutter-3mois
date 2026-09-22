@@ -41,8 +41,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
+  
+  int _text = 0;
   
 
   @override
@@ -57,6 +57,36 @@ class _MyHomePageState extends State<MyHomePage> {
 
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
+
+    void showAlertDialog(){
+      showDialog(
+        barrierDismissible: false,
+        context: context, 
+        builder: (BuildContext context){
+          return AlertDialog(
+            title: Text('Incrmentation'),
+            content: const Text('cliquer sur ok pour incremnter votre compteur'),
+            actions: [
+              TextButton(
+                onPressed: (){
+                  Navigator.pop(context);
+                }, 
+                child: const Text('Annuler')
+              ),
+              TextButton(
+                onPressed: (){
+                  setState(() {
+                    _text++;
+                  });
+                  Navigator.pop(context);
+                }, 
+                child: const Text('OK'),
+              )
+            ],
+          );
+        }
+      );
+    }
     
     return Scaffold(
       appBar: AppBar(
@@ -69,9 +99,19 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: ElevatedButton(
-          onPressed: printSnakBar, 
-          child: Text('afficher une snackBar')
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            ElevatedButton(
+              onPressed: printSnakBar, 
+              child: Text('afficher une snackBar')
+            ),
+
+            ElevatedButton(
+              onPressed: showAlertDialog, 
+              child: Text('vous avez cliquer $_text fois ')
+            )
+          ],
         ),
       )
       
