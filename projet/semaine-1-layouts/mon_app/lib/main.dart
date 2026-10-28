@@ -1,120 +1,73 @@
 import 'package:flutter/material.dart';
 
-void main() {
+void main(){
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatelessWidget{
+  // constructeur de ma classe
   const MyApp({super.key});
-
-  // This widget is the root of your application.
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        
-        colorScheme: .fromSeed(seedColor: Colors.deepPurple),
-      ),
       debugShowCheckedModeBanner: false,
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: HomePage(title: 'Flutter',),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
+class HomePage extends StatefulWidget{
+  
   final String title;
+  const HomePage({super.key, required this.title});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<StatefulWidget> createState() {
+    return _HomePageState(); 
+  }
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _HomePageState extends State<HomePage>{
   
-  int _text = 0;
-  
+  int _counter = 0;
+
+  void _onButtonPressed(){
+    setState(() {
+      _counter++;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-
-    void printSnakBar(){
-      SnackBar snackBar = SnackBar(
-        content: Text('vous venez de cliquer sur le bouton'),
-        duration: Duration(seconds: 3),
-        showCloseIcon: true,
-      );
-
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    }
-
-    void showAlertDialog(){
-      showDialog(
-        barrierDismissible: false,
-        context: context, 
-        builder: (BuildContext context){
-          return AlertDialog(
-            title: Text('Incrmentation'),
-            content: const Text('cliquer sur ok pour incremnter votre compteur'),
-            actions: [
-              TextButton(
-                onPressed: (){
-                  Navigator.pop(context);
-                }, 
-                child: const Text('Annuler')
-              ),
-              TextButton(
-                onPressed: (){
-                  setState(() {
-                    _text++;
-                  });
-                  Navigator.pop(context);
-                }, 
-                child: const Text('OK'),
-              )
-            ],
-          );
-        }
-      );
-    }
-    
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
+        centerTitle: true,
       ),
-      body: Center(
+      body:  Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(
-              onPressed: printSnakBar, 
-              child: Text('afficher une snackBar')
+            Text('Vous avez cliquer',
+              style: Theme.of(context).textTheme.titleLarge,
             ),
-
-            ElevatedButton(
-              onPressed: showAlertDialog, 
-              child: Text('vous avez cliquer $_text fois ')
+            Text(
+              "$_counter fois",
+              style: TextStyle(
+                fontSize: 18,
+                color: Theme.of(context).colorScheme.onPrimary
+              ),
             )
           ],
         ),
-      )
-      
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _onButtonPressed,
+        tooltip: 'Incrementer le compteur',
+        child: Icon(Icons.add),
+      ),
     );
   }
 }
